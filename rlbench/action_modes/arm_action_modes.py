@@ -54,12 +54,15 @@ class JointVelocity(ArmActionMode):
     Similar to the action space in many continious control OpenAI Gym envs.
     """
 
+    def __init__(self):
+        self._callable_each_step = None
+
     def action(self, scene: Scene, action: np.ndarray):
         assert_action_shape(action, self.action_shape(scene))
         scene.robot.arm.set_joint_target_velocities(action)
         scene.step()
         scene.robot.arm.set_joint_target_velocities(np.zeros_like(action))
-        self._callable_each_step = None
+
 
     def set_callable_each_step(self, callable_each_step):
         self._callable_each_step = callable_each_step
