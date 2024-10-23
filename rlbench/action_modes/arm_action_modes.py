@@ -53,12 +53,16 @@ class JointVelocity(ArmActionMode):
 
     Similar to the action space in many continious control OpenAI Gym envs.
     """
-    
+
     def action(self, scene: Scene, action: np.ndarray):
         assert_action_shape(action, self.action_shape(scene))
         scene.robot.arm.set_joint_target_velocities(action)
         scene.step()
         scene.robot.arm.set_joint_target_velocities(np.zeros_like(action))
+        self._callable_each_step = None
+
+    def set_callable_each_step(self, callable_each_step):
+        self._callable_each_step = callable_each_step
 
     def action_shape(self, scene: Scene) -> tuple:
         return SUPPORTED_ROBOTS[scene.robot_setup][2],
@@ -66,6 +70,13 @@ class JointVelocity(ArmActionMode):
     def set_control_mode(self, robot: Robot):
         robot.arm.set_control_loop_enabled(False)
         robot.arm.set_motor_locked_at_zero_velocity(True)
+
+    def record_end(self, scene, steps=60, step_scene=True):
+        if self._callable_each_step is not None:
+            for _ in range(steps):
+                if step_scene:
+                    scene.step()
+                self._callable_each_step(scene.get_observation())
 
 
 class JointPosition(ArmActionMode):
@@ -207,7 +218,7 @@ class EndEffectorPoseViaPlanning(ArmActionMode):
                 grasped_objects = scene.robot.gripper.get_grasped_objects()
                 colliding_shapes = [
                     s for s in scene.pyrep.get_objects_in_tree(
-                        object_type = ObjectType.SHAPE) if (
+                        object_type=ObjectType.SHAPE) if (
                             s.is_collidable() and
                             s not in self._robot_shapes and
                             s not in grasped_objects and
@@ -272,6 +283,7 @@ class EndEffectorPoseViaPlanning(ArmActionMode):
                 if step_scene:
                     scene.step()
                 self._callable_each_step(scene.get_observation())
+
 
 class EndEffectorPoseViaIK(ArmActionMode):
     """High-level action where target pose is given and reached via IK.

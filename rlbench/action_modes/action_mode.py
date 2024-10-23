@@ -32,7 +32,7 @@ class MoveArmThenGripper(ActionMode):
         arm_action = np.array(action[:arm_act_size])
         ee_action = np.array(action[arm_act_size:arm_act_size+1])
         ignore_collisions = bool(action[arm_act_size+1:arm_act_size+2])
-        self.arm_action_mode.action(scene, arm_action, ignore_collisions)
+        self.arm_action_mode.action(scene, arm_action)
         self.gripper_action_mode.action(scene, ee_action)
 
     def action_shape(self, scene: Scene):
