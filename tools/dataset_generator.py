@@ -23,22 +23,22 @@ from absl import flags
 FLAGS = flags.FLAGS
 
 flags.DEFINE_string('save_path',
-                    '/tmp/rlbench_data/',
+                    '/scratch/partial_datasets/llarva_v2/new_val_rlbench',
                     'Where to save the demos.')
-flags.DEFINE_list('tasks', [],
+flags.DEFINE_list('tasks', ['light_bulb_in'],
                   'The tasks to collect. If empty, all tasks are collected.')
 flags.DEFINE_list('image_size', [128, 128],
                   'The size of the images tp save.')
-flags.DEFINE_enum('renderer',  'opengl3', ['opengl', 'opengl3'],
+flags.DEFINE_enum('renderer',  'opengl', ['opengl', 'opengl3'],
                   'The renderer to use. opengl does not include shadows, '
                   'but is faster.')
 flags.DEFINE_integer('processes', 1,
                      'The number of parallel processes during collection.')
-flags.DEFINE_integer('episodes_per_task', 10,
+flags.DEFINE_integer('episodes_per_task', 25,
                      'The number of episodes to collect per task.')
-flags.DEFINE_integer('variations', -1,
+flags.DEFINE_integer('variations', 3,
                      'Number of variations to collect per task. -1 for all.')
-flags.DEFINE_bool('all_variations', True,
+flags.DEFINE_bool('all_variations', False,
                   'Include all variations when sampling epsiodes')
 
 

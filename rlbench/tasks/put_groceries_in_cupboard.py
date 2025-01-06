@@ -19,6 +19,18 @@ GROCERY_NAMES = [
     'sugar',
 ]
 
+GROCERY_NAMES = [
+    'chocolate jello',
+    'crackers',
+    'strawberry jello',
+    'soup',
+    'tuna',
+    'spam',
+    'coffee',
+    'mustard',
+    'sugar',
+]
+
 
 class PutGroceriesInCupboard(Task):
 
