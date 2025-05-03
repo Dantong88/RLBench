@@ -9,8 +9,8 @@ from rlbench.backend.conditions import NothingGrasped
 from rlbench.backend.spawn_boundary import SpawnBoundary
 from rlbench.const import colors
 
-MAX_STACKED_BLOCKS = 3
-DISTRACTORS = 4
+MAX_STACKED_BLOCKS = 1
+DISTRACTORS = 0
 
 
 class StackBlocks(Task):
@@ -18,13 +18,13 @@ class StackBlocks(Task):
     def init_task(self) -> None:
         self.blocks_stacked = 0
         self.target_blocks = [Shape('stack_blocks_target%d' % i)
-                              for i in range(4)]
+                              for i in range(1)]
         self.distractors = [
             Shape('stack_blocks_distractor%d' % i)
             for i in range(DISTRACTORS)]
 
         self.boundaries = [Shape('stack_blocks_boundary%d' % i)
-                           for i in range(4)]
+                           for i in range(1)]
 
         self.register_graspable_objects(self.target_blocks + self.distractors)
 
@@ -36,7 +36,7 @@ class StackBlocks(Task):
     def init_episode(self, index: int) -> List[str]:
         # For each color, we want to have 2, 3 or 4 blocks stacked
         color_index = int(index / MAX_STACKED_BLOCKS)
-        self.blocks_to_stack = 2 + index % MAX_STACKED_BLOCKS
+        self.blocks_to_stack = 1 #2 + index % MAX_STACKED_BLOCKS
         color_name, color_rgb = colors[color_index]
         for b in self.target_blocks:
             b.set_color(color_rgb)

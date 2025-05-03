@@ -1,6 +1,6 @@
 from typing import List
 from rlbench.backend.task import Task
-from rlbench.const import colors
+# from rlbench.const import colors
 from rlbench.backend.conditions import NothingGrasped, DetectedCondition
 from rlbench.backend.spawn_boundary import SpawnBoundary
 import numpy as np
@@ -8,6 +8,31 @@ from pyrep.objects.shape import Shape
 from pyrep.objects.proximity_sensor import ProximitySensor
 from pyrep.objects.dummy import Dummy
 
+colors = [
+('yellow', (1.0, 1.0, 0.0)),
+('purple', (0.5, 0.0, 0.5)),
+('silver', (0.75, 0.75, 0.75)),
+    # ('red', (1.0, 0.0, 0.0)),
+    # ('maroon', (0.5, 0.0, 0.0)),
+    # ('lime', (0.0, 1.0, 0.0)),
+    # ('green', (0.0, 0.5, 0.0)),
+    # ('blue', (0.0, 0.0, 1.0)),
+    # ('navy', (0.0, 0.0, 0.5)),
+    #
+    # ('cyan', (0.0, 1.0, 1.0)),
+    # ('magenta', (1.0, 0.0, 1.0)),
+    #
+    # ('gray', (0.5, 0.5, 0.5)),
+    # ('orange', (1.0, 0.5, 0.0)),
+    # ('olive', (0.5, 0.5, 0.0)),
+    #
+    # ('teal', (0, 0.5, 0.5)),
+    # ('azure', (0.0, 0.5, 1.0)),
+    # ('violet', (0.5, 0.0, 1.0)),
+    # ('rose', (1.0, 0.0, 0.5)),
+    # ('black', (0.0, 0.0, 0.0)),
+    # ('white', (1.0, 1.0, 1.0)),
+]
 
 class LightBulbIn(Task):
 
